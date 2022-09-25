@@ -24,8 +24,22 @@ export default {
     },
 
     size: {
-        sm: 12,
-        md: 14,
-        lg: 36,
+        ty: 4,
+        xs: 5,
+        sm: 10,
+        md: 20,
+        lg: 25,
+        xl: 38,
+        xxl: 45,
+        xxxl: 100,
+    },
+
+    border: {
+        radius: {
+            xs: 5,
+            sm: 10,
+            md: 15,
+            lg: 20
+        }
     }
 }
