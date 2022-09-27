@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Alert, FlatList, StatusBar } from "react-native";
 import Divider from "../../components/Divider";
+import EmptyList from "../../components/EmptyList";
 import { Icon } from "../../components/Icon";
 import Input from "../../components/Input";
 import ListCard from "../../components/ListCard";
@@ -26,19 +27,19 @@ import {
 } from "./styles";
 
 export function Home() {
-  const [participants, setParticipants] = useState<string[]>([]);
-  const [participantName, setParticipantName] = useState("");
+  const [list, setList] = useState<string[]>([]);
+  const [todo, setTodo] = useState("");
 
   function handleParticipantAdd() {
-    if (participants.includes(participantName)) {
+    if (list.includes(todo)) {
       return Alert.alert(
-        "Participante já existe",
-        "Já existe um participante na lista com esse nome."
+        "Item já existe",
+        "Já existe um item na lista com esse nome."
       );
     }
 
-    setParticipants((prevState) => [...prevState, participantName]);
-    setParticipantName("");
+    setList((prevState) => [...prevState, todo]);
+    setTodo("");
   }
 
   return (
@@ -63,8 +64,8 @@ export function Home() {
             autoCapitalize="none"
             keyboardType="default"
             placeholder="Adicione uma nova tarefa"
-            onChangeText={setParticipantName}
-            value={participantName}
+            onChangeText={setTodo}
+            value={todo}
           />
 
           <CardAddList onPress={handleParticipantAdd}>
@@ -107,33 +108,14 @@ export function Home() {
           </Done>
         </InfoCreatedDoneWrapper>
 
-        <Separator height={15} />
-        <Divider color={theme.colors.gray_300} />
-        <Separator height={48} />
-
         <ContentList>
+          <Separator height={20} />
           <FlatList
-            data={participants}
+            data={list}
             keyExtractor={(item) => item}
             renderItem={({ item }) => <ListCard name={item} />}
             showsVerticalScrollIndicator={false}
-            // TODO: Transformar em componente 
-            ListEmptyComponent={() => (
-              <TextAlignCenter>
-                <Icon icon="clipboard" size={56}/>
-                <Separator height={16}/>
-                <Text
-                  color={theme.colors.gray_300}
-                  font={theme.fonts.bold}
-                >
-                  Você ainda não tem tarefas cadastradas
-                </Text>
-                  <Text color={theme.colors.gray_300}>
-                    Crie tarefas e organize seus itens a fazer
-                  </Text>
-              </TextAlignCenter>
-            )}
-
+            ListEmptyComponent={() => <EmptyList />}
           />
         </ContentList>
       </Content>

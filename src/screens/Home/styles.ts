@@ -2,7 +2,7 @@ import styled from "styled-components/native";
 
 export const Container = styled.View`
   flex: 1;
-  background-color: #262626;
+  background-color: ${({ theme }) => theme.colors.gray_600};
 `;
 
 export const BackgroundHeader = styled.View`
@@ -78,7 +78,7 @@ export const Done = styled.View`
 
 export const ContentList = styled.View`
   width: 100%;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
 `;
 
@@ -90,5 +90,4 @@ export const TextAlignCenter = styled.View`
   width: 100%;
   justify-content: center;
   align-items: center;
-  
 `;
