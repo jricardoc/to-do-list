@@ -5,4 +5,5 @@ export interface Props extends TextProps {
   color?: string;
   size?: number;
   font?: string;
+  lineThrough?: boolean;
 }

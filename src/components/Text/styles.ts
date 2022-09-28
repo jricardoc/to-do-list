@@ -1,10 +1,10 @@
 import styled from "styled-components/native";
 import { Props } from "./types";
 
-type ContainerProps = Required<Pick<Props, "color" | "size" | "font">>;
-
-export const Container = styled.Text<ContainerProps>`
+export const Container = styled.Text<Props>`
   color: ${({ color }) => color};
   font-size: ${({ size }) => size}px;
   font-family: ${({ font }) => font};
+  ${({ lineThrough }) => lineThrough && "text-decoration: line-through"}
+  
 `;

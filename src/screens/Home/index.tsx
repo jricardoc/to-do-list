@@ -28,9 +28,11 @@ import {
 
 export function Home() {
   const [list, setList] = useState<string[]>([]);
-  const [todo, setTodo] = useState("");
+  const [todo, setTodo] = useState<string>("");
+  const [isChecked, setIsChecked] = useState(false);
+  const [count, setCount] = useState<number>(0);
 
-  function handleParticipantAdd() {
+  function handleListAdd() {
     if (list.includes(todo)) {
       return Alert.alert(
         "Item já existe",
@@ -40,6 +42,14 @@ export function Home() {
 
     setList((prevState) => [...prevState, todo]);
     setTodo("");
+  }
+
+  const handleIsChecked = (command: boolean) => {
+    if (command) {
+      setIsChecked(true)
+    } else {
+      setIsChecked(false)
+    }
   }
 
   return (
@@ -68,7 +78,7 @@ export function Home() {
             value={todo}
           />
 
-          <CardAddList onPress={handleParticipantAdd}>
+          <CardAddList onPress={handleListAdd}>
             <Icon icon="plus" size={20} />
           </CardAddList>
         </InputWrapper>
@@ -88,7 +98,7 @@ export function Home() {
                 size={12}
                 font={theme.fonts.bold}
               >
-                0
+                {list.length}
               </Text>
             </Counter>
           </Created>
@@ -113,9 +123,10 @@ export function Home() {
           <FlatList
             data={list}
             keyExtractor={(item) => item}
-            renderItem={({ item }) => <ListCard name={item} />}
+            renderItem={({ item }) => <ListCard item={item} handleIsChecked={handleIsChecked} isChecked={isChecked} />}
             showsVerticalScrollIndicator={false}
             ListEmptyComponent={() => <EmptyList />}
+            ItemSeparatorComponent={() => <Separator height={8}/>}
           />
         </ContentList>
       </Content>
