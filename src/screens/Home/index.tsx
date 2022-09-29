@@ -46,10 +46,28 @@ export function Home() {
 
   const handleIsChecked = (command: boolean) => {
     if (command) {
-      setIsChecked(true)
+      setIsChecked(true);
+      setCount((prevState) => prevState + 1)
     } else {
-      setIsChecked(false)
+      setIsChecked(false);
+      setCount((prevState) => prevState - 1)
     }
+  };
+
+  function handleTaskRemove(name: string) {
+    Alert.alert("Remover", `Remover a tarefa ${name}?`, [
+      {
+        text: "Sim",
+        onPress: () =>
+          setList((prevState) =>
+            prevState.filter((task) => task !== name)
+          ),
+      },
+      {
+        text: "Não",
+        style: "cancel",
+      },
+    ]);
   }
 
   return (
@@ -112,7 +130,7 @@ export function Home() {
                 size={12}
                 font={theme.fonts.bold}
               >
-                0
+                {count}
               </Text>
             </Counter>
           </Done>
@@ -123,10 +141,17 @@ export function Home() {
           <FlatList
             data={list}
             keyExtractor={(item) => item}
-            renderItem={({ item }) => <ListCard item={item} handleIsChecked={handleIsChecked} isChecked={isChecked} />}
+            renderItem={({ item }) => (
+              <ListCard
+                item={item}
+                handleIsChecked={handleIsChecked}
+                isChecked={isChecked}
+                onRemove={() => handleTaskRemove(item)}
+              />
+            )}
             showsVerticalScrollIndicator={false}
             ListEmptyComponent={() => <EmptyList />}
-            ItemSeparatorComponent={() => <Separator height={8}/>}
+            ItemSeparatorComponent={() => <Separator height={8} />}
           />
         </ContentList>
       </Content>

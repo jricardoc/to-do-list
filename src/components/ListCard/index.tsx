@@ -9,10 +9,11 @@ interface Props {
   item: string;
   handleIsChecked: (command: boolean) => void;
   isChecked: boolean;
+  onRemove?: () => void;
 }
 
 
-export default function ListCard({ item, handleIsChecked, isChecked }: Props) {
+export default function ListCard({ item, handleIsChecked, isChecked, onRemove }: Props) {
   return (
     <Container onPress={() => handleIsChecked(!isChecked)}>
       <Icon icon={isChecked ? "circleChecked" : "circleUnchecked"} size={24} />
@@ -24,7 +25,7 @@ export default function ListCard({ item, handleIsChecked, isChecked }: Props) {
       >
         {item}
       </Text>
-      <TouchableOpacity onPress={() => console.log("teste 2222")}>
+      <TouchableOpacity onPress={onRemove}>
         <Icon icon="trash" size={32} />
       </TouchableOpacity>
     </Container>
