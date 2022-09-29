@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import {  TouchableOpacity } from "react-native";
 import theme from "../../global/styles/theme";
 import { Icon } from "../Icon";
@@ -7,13 +7,22 @@ import { Container } from "./styles";
 
 interface Props {
   item: string;
-  handleIsChecked: (command: boolean) => void;
-  isChecked: boolean;
   onRemove?: () => void;
+  setCount: Dispatch<SetStateAction<number>>;
 }
 
-
-export default function ListCard({ item, handleIsChecked, isChecked, onRemove }: Props) {
+export default function ListCard({ item, onRemove, setCount }: Props) {
+  const [isChecked, setIsChecked] = useState(false);
+  
+  const handleIsChecked = (command: boolean) => {
+  if (command) {
+    setIsChecked(true);
+    setCount((prevState) => prevState + 1);
+  } else {
+    setIsChecked(false);
+    setCount((prevState) => prevState - 1);
+  }
+};
   return (
     <Container onPress={() => handleIsChecked(!isChecked)}>
       <Icon icon={isChecked ? "circleChecked" : "circleUnchecked"} size={24} />
@@ -25,7 +34,7 @@ export default function ListCard({ item, handleIsChecked, isChecked, onRemove }:
       >
         {item}
       </Text>
-      <TouchableOpacity onPress={onRemove}>
+      <TouchableOpacity onPress={onRemove}>      
         <Icon icon="trash" size={32} />
       </TouchableOpacity>
     </Container>

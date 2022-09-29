@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Alert, FlatList, StatusBar } from "react-native";
-import Divider from "../../components/Divider";
 import EmptyList from "../../components/EmptyList";
 import { Icon } from "../../components/Icon";
 import Input from "../../components/Input";
@@ -23,13 +22,11 @@ import {
   Done,
   ContentList,
   Content,
-  TextAlignCenter,
 } from "./styles";
 
 export function Home() {
   const [list, setList] = useState<string[]>([]);
   const [todo, setTodo] = useState<string>("");
-  const [isChecked, setIsChecked] = useState(false);
   const [count, setCount] = useState<number>(0);
 
   function handleListAdd() {
@@ -43,16 +40,6 @@ export function Home() {
     setList((prevState) => [...prevState, todo]);
     setTodo("");
   }
-
-  const handleIsChecked = (command: boolean) => {
-    if (command) {
-      setIsChecked(true);
-      setCount((prevState) => prevState + 1)
-    } else {
-      setIsChecked(false);
-      setCount((prevState) => prevState - 1)
-    }
-  };
 
   function handleTaskRemove(name: string) {
     Alert.alert("Remover", `Remover a tarefa ${name}?`, [
@@ -144,9 +131,8 @@ export function Home() {
             renderItem={({ item }) => (
               <ListCard
                 item={item}
-                handleIsChecked={handleIsChecked}
-                isChecked={isChecked}
                 onRemove={() => handleTaskRemove(item)}
+                setCount={setCount}
               />
             )}
             showsVerticalScrollIndicator={false}
